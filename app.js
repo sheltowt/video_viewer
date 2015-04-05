@@ -12,10 +12,11 @@ app.use(express.static(path.join(application_root, "public")));
 app.use(bodyParser.json());
 
 app.get('/search', function (req, res){
-	section = req.params.section 
-	sort = req.params.sort
-	page = req.params.page
-	imgur.retrieveAssets(section, sort, page).then(function(filteredAssets){
+	sort = req.query.sort
+	page = req.query.page
+	query_string = req.query.query_string
+	console.log(query_string)
+	imgur.retrieveAssets(query_string, sort, page).then(function(filteredAssets){
 		res.send(filteredAssets)
 	});
 })

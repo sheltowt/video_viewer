@@ -8,8 +8,7 @@ var filterCondition = function(asset, callback) {
 		if (asset["type"] == "image\/gif") {
 			callback(null, asset)
 		} else {
-			err = "no asset"
-			callback(err, null)
+			callback(null, null)
 		}
 	});
 }
@@ -24,14 +23,9 @@ var filterForGifs = function(imgurAssets) {
 
 
 module.exports = {
-	retrieveAssets: function(section, sort, page) {
+	retrieveAssets: function(queryString, sort, page) {
 		return new Promise(function(resolve){
-			url = "https://api.imgur.com/3/gallery/"
-			if (section) {
-				url += section + "/"
-			} else {
-				url += "hot/"
-			}
+			url = "https://api.imgur.com/3/gallery/search/"
 			if (sort) {
 				url += sort + "/"
 			} else {
@@ -40,7 +34,12 @@ module.exports = {
 			if (page) {
 				url += page + "/"
 			} else {
-				url += "1/"
+				url += "1?"
+			}
+			if (queryString) {
+				url += "q_any=" + queryString
+			} else {
+				url += "q_any=justin bieber" 
 			}
 			options = {
 				url: url,
@@ -51,7 +50,7 @@ module.exports = {
 			request(options, function(error, response, body){
 				body = JSON.parse(body)
 				filteredResults = filterForGifs(body["data"]).then(function(response){
-					console.log(response)
+					response = response.filter(function(n){ return n != undefined }); 
 					return resolve(response)
 				})
 			});

@@ -62,9 +62,7 @@
 		if (pageInput) {
 			queryString += "&page=" + pageInput
 		}
-		console.log(queryString)
 		$.get(queryString, function(data){
-			console.log(data)
 			for (var i = 0; i < data.length; i++) {
 				element = "<img class=gif src=" + data[i]["link"] +"height=\"300\" width=\"300\">"
 				$("#gifs").append(element)

@@ -47,7 +47,6 @@ module.exports = {
 					'Authorization': 'Client-ID ' + config.client_id
 				}
 			}
-			console.log(options.url)
 			request(options, function(error, response, body){
 				body = JSON.parse(body)
 				filteredResults = filterForGifs(body["data"]).then(function(response){

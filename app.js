@@ -15,7 +15,6 @@ app.get('/search', function (req, res){
 	sort = req.query.sort
 	page = req.query.page
 	query_string = req.query.query_string
-	console.log(page)
 	imgur.retrieveAssets(query_string, sort, page).then(function(filteredAssets){
 		res.send(filteredAssets)
 	});
